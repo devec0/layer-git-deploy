@@ -9,12 +9,12 @@ from charmhelpers.core.hookenv import (
 from charms.layer import options
 
 
-def git():
+def _git():
     return 'GIT_SSH={} git'.format('{}/files/wrap_ssh.sh'.format(charm_dir()))
 
 
 def clone():
-    cmd =  "{} clone {} {}".format(git(), config('repo'), options('target'))
+    cmd =  "{} clone {} {}".format(_git(), config('repo'), options('target'))
     res = check_call(cmd, shell=True)
     if res != 0:
         if config('key-required'):
@@ -34,7 +34,7 @@ def update_to_commit():
     """Update prm codebase to a commit sha
     """
     cmd = "cd {} && {} checkout {}".format(options('target'), 
-                                           git(), config('commit'))
+                                           _git(), config('commit'))
     res = check_call(cmd, shell=True)
     if res != 0:
         status_set('error', 'has a problem with git, try `resolved --retry')
