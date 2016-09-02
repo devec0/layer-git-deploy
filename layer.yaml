@@ -1,0 +1,23 @@
+includes:
+  - 'layer:basic'
+options:
+  basic:
+    packages:
+      - 'git'
+defines:
+  target:
+    type: string
+    default: '/srv/app'
+    description: |
+      Target dircetory for 'git clone'
+  owner:
+    type: string
+    default: 'www-data'
+    description: |
+      Owner of target dir
+  group:
+    type: string
+    default: 'www-data'
+    description: |
+      Group membership for target dir
+repo: 'https://github.com/jamesbeedy/layer-git-deploy.git'

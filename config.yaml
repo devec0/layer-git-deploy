@@ -1,0 +1,21 @@
+options:
+  commit:
+    type: string
+    default: 
+    description: commit to update to 
+  repo:
+    type: string
+    default:
+    description: The repository to clone from, this is required
+  deploy-key:
+    type: string
+    default: ''
+    description: |
+      A deploy key is an SSH key that is stored on the server and
+      grants access to a repository.
+  key-required:
+    type: boolean
+    default: false
+    description: |
+      This should be set to true to ensure that a deploy key is
+      deployed if necessary

@@ -1,0 +1,10 @@
+name: git-deploy
+summary: Reactive layer to help deploy things using git
+maintainer: James Beedy <jamesbeedy@gmail.com>
+description: |
+  This layer provides git-deploy.
+tags:
+  - git
+  - deploy
+
+
