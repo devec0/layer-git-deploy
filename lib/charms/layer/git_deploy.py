@@ -9,12 +9,16 @@ from charmhelpers.core.hookenv import (
 from charms.layer import options
 
 
-def _git():
+
+
+def git():
     return 'GIT_SSH={} git'.format('{}/files/wrap_ssh.sh'.format(charm_dir()))
 
 
 def clone():
-    cmd =  "{} clone {} {}".format(_git(), config('repo'), options('target'))
+    opts = options('get-deploy')
+    cmd =  "{} clone {} {}".format(git(), config('repo'), 
+                                   opts.get('target'))
     res = check_call(cmd, shell=True)
     if res != 0:
         if config('key-required'):
@@ -26,18 +30,19 @@ def clone():
             sys.exit(0)
         status_set('error', 'has a problem with git, try `resolved --retry')
         sys.exit(1)
-    chownr(path=options('target'),
-           owner=options('owner'), group=options('group'))
+    chownr(path=opts.get('target'), owner=opts.get('owner'),
+           group=opts.get('group'))
 
 
 def update_to_commit():
     """Update prm codebase to a commit sha
     """
-    cmd = "cd {} && {} checkout {}".format(options('target'), 
-                                           _git(), config('commit'))
+    opts = options('get-deploy')
+    cmd = "cd {} && {} checkout {}".format(opts.get('target'),
+                                           git(), config('commit'))
     res = check_call(cmd, shell=True)
     if res != 0:
         status_set('error', 'has a problem with git, try `resolved --retry')
         sys.exit(1)
-    chownr(path=options('target'),
-           owner=options('owner'), group=options('group'))
+    chownr(path=opts.get('target'), owner=opts.get('owner'),
+           group=opts.get('group'))
