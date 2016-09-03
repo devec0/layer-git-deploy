@@ -1,5 +1,7 @@
 from subprocess import check_call
 
+from charmhelpers.core.host import chownr
+
 from charmhelpers.core.hookenv import (
     charm_dir,
     config,
