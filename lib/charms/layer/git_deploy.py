@@ -16,7 +16,7 @@ def git():
 
 
 def clone():
-    opts = options('get-deploy')
+    opts = options('git-deploy')
     cmd =  "{} clone {} {}".format(git(), config('repo'), 
                                    opts.get('target'))
     res = check_call(cmd, shell=True)
@@ -37,7 +37,7 @@ def clone():
 def update_to_commit():
     """Update prm codebase to a commit sha
     """
-    opts = options('get-deploy')
+    opts = options('git-deploy')
     cmd = "cd {} && {} checkout {}".format(opts.get('target'),
                                            git(), config('commit'))
     res = check_call(cmd, shell=True)
