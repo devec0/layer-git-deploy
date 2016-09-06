@@ -1,32 +1,24 @@
 # layer-git-deploy
 
-This layer provides 2 utility functions and 1 actions
-that make getting your project code from your git repo 
-to your machine a breeze!
+This layer provides a git abstraction for github/gitlab code deploys that
+makes getting your project code from your git repo to your machine a breeze!
 
-
-### Utils
-Once the 'git.deploy.available' state is set, you can access the utility functions
-by importing `charms.layer.git_deploy`.
-
-
-* clone - appropriately titled, preforms 'git clone' of the repo specified in config.yaml
-* update_to_commit - also appropriately titled, updates the  codebase to a commit.
+Once the 'codebase.available' state is set, you can be assured your project code has been
+cloned down to the 'target' directory.
 
 ##### Example Usage
 ```python
-from charmhelpers.core.hookenv import config, status_set
+from charmhelpers.core.hookenv import status_set
+from charmhelpers.core.hookenv import service_restart
 from charms.reactive import when, when_not, set_state
 
 from charms.layer import git_deploy
 
-@when('git.deploy.available')
-@when_not('codebase.deployed')
-def clone_repo():
-    git_deploy.clone()
-    if config('commit'):
-        git_deploy.update_to_commit()
-    set_state('codebase.deployed')
+@when('codebase.available')
+@when_not('app.initialized')
+def init_app():
+    service_restart('nginx')
+    set_state('app.initialized')
 ```
 
 ### Actions
@@ -37,7 +29,7 @@ To use this action, once your charm that has been built with this layer is deplo
 you can use Juju to run the action from the Juju cli. E.g `juju run-action <mycharm>/0 update-app <commit-sha>`.
 
 ### States
-* `'git.deploy.available'` - set once layer-git-deploy is available
+* `'codebase.available'` - set once the codebase has been successfully cloned from the remote repository.
 
 
 #### Contributors
