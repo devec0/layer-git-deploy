@@ -11,8 +11,6 @@ from charmhelpers.core.hookenv import (
 from charms.layer import options
 
 
-
-
 def git():
     return 'GIT_SSH={} git'.format('{}/files/wrap_ssh.sh'.format(charm_dir()))
 
