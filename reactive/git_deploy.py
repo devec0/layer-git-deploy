@@ -1,3 +1,5 @@
+import os
+
 from charms.reactive import when_not, set_state
 
 from charmhelpers.core.hookenv import config
