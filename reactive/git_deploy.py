@@ -1,13 +1,12 @@
 import os
+from shutil import rmtree
 
 from charms.reactive import when_not, set_state
 
 from charmhelpers.core.hookenv import config
-
 from charmhelpers.core.templating import render
 
 from charms.layer.git_deploy import clone, update_to_commit
-
 from charms.layer import options
 
 
@@ -36,7 +35,7 @@ def git_deploy_avail():
 
     # Check if path exists, clone down repo
     if os.path.exists(opts.get('target')):
-        shutil.rmtree(opts.get('target'), ignore_errors=True)
+        rmtree(opts.get('target'), ignore_errors=True)
     clone()
 
     # Update to commit if config('commit')
