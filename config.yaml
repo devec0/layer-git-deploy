@@ -1,8 +1,8 @@
 options:
-  commit:
+  commit-or-branch:
     type: string
     default: 
-    description: commit to update to 
+    description: Commit or branch to update to 
   repo:
     type: string
     default:

@@ -39,7 +39,7 @@ def git_deploy_avail():
     clone()
 
     # Update to commit if config('commit')
-    if config('commit') is not None:
+    if config('commit-or-branch') is not None:
         update_to_commit()
 
     # Set codebase.available state

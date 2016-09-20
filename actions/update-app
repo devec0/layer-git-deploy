@@ -1,12 +1,12 @@
 #!/bin/bash
 
-commit = action-get commit
+commit-or-branch = action-get commit-or-branch
 
-if [[ commit == "" ]]; then
-  echo "Cannot update to a commit without a commit"
+if [[ commit-or-branch == "" ]]; then
+  echo "Cannot update to a commit without a commit or branch"
   exit 0
 fi
 
 cd $(config-get app-path)
 git fetch origin master
-git checkout $(action-get commit)
+git checkout $(action-get commit-or-branch)

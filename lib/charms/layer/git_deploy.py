@@ -39,7 +39,7 @@ def update_to_commit():
     """
     opts = options('git-deploy')
     cmd = "cd {} && {} checkout {}".format(opts.get('target'),
-                                           git(), config('commit'))
+                                           git(), config('commit-or-branch'))
     res = check_call(cmd, shell=True)
     if res != 0:
         status_set('error', 'has a problem with git, try `resolved --retry')
