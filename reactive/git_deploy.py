@@ -40,7 +40,7 @@ def git_deploy_avail():
 
     # Update to commit if config('commit')
     if config('commit-or-branch') is not None:
-        update_to_commit()
+        update_to_commit(config('commit-or-branch'))
 
     # Set codebase.available state
     set_state('codebase.available')

@@ -34,12 +34,12 @@ def clone():
            group=opts.get('group'))
 
 
-def update_to_commit():
+def update_to_commit(commit):
     """Update prm codebase to a commit sha
     """
     opts = options('git-deploy')
     cmd = "cd {} && {} checkout {}".format(opts.get('target'),
-                                           git(), config('commit-or-branch'))
+                                           git(), commit)
     res = check_call(cmd, shell=True)
     if res != 0:
         status_set('error', 'has a problem with git, try `resolved --retry')
