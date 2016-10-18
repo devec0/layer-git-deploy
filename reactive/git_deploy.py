@@ -16,6 +16,7 @@ def git_deploy_avail():
     """
 
     opts = options('git-deploy')
+    parent_dir = os.path.dirname(os.path.normpath(opts.get('target')))
 
     if config('key-required'):
         if config('deploy-key') is None:
@@ -36,6 +37,9 @@ def git_deploy_avail():
     # Check if path exists, clone down repo
     if os.path.exists(opts.get('target')):
         rmtree(opts.get('target'), ignore_errors=True)
+    else:
+        if not os.path.exists(parent_dir):
+            os.makedirs(parent_dir, mode=0o777, exist_ok=True)
     clone()
 
     # Update to commit if config('commit')
