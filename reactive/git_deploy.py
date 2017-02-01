@@ -19,7 +19,7 @@ def git_deploy_avail():
 
     opts = options('git-deploy')
     parent_dir = os.path.dirname(os.path.normpath(opts.get('target')))
-    timstamp = datetime.utcnow().strftime('%Y%m%d%H%M%S%d')
+    timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S%d')
     new_deploy_dir = os.path.join(opts.get('target'), timestamp)
     current_deploy = os.path.join(opts.get('target'), 'current')
 
