@@ -1,7 +1,0 @@
-update-app:
-  description: Updates the app to a given sha
-  options:
-    commit-or-branch:
-      type: string
-      default:
-      description: SHA of the commit, or branch name to update to
