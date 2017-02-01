@@ -11,14 +11,14 @@ from charmhelpers.core.hookenv import (
 from charms.layer import options
 
 
+
 def git():
     return 'GIT_SSH={} git'.format('{}/files/wrap_ssh.sh'.format(charm_dir()))
 
 
-def clone():
+def clone(deploy_dir):
     opts = options('git-deploy')
-    cmd =  "{} clone {} {}".format(git(), config('repo'), 
-                                   opts.get('target'))
+    cmd =  "{} clone {} {}".format(git(), config('repo'), deploy_dir)
     res = check_call(cmd, shell=True)
     if res != 0:
         if config('key-required'):
@@ -34,12 +34,12 @@ def clone():
            group=opts.get('group'))
 
 
-def update_to_commit(commit):
+def update_to_commit(commit, deploy_dir):
     """Update prm codebase to a commit sha
     """
+
     opts = options('git-deploy')
-    cmd = "cd {} && {} checkout {}".format(opts.get('target'),
-                                           git(), commit)
+    cmd = "cd {} && {} checkout {}".format(deploy_dir, git(), commit)
     res = check_call(cmd, shell=True)
     if res != 0:
         status_set('error', 'has a problem with git, try `resolved --retry')

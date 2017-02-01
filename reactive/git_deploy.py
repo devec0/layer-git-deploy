@@ -1,6 +1,7 @@
 import os
 import sys
 from shutil import rmtree
+from datetime import datetime
 
 from charms.reactive import when_not, set_state
 
@@ -18,6 +19,9 @@ def git_deploy_avail():
 
     opts = options('git-deploy')
     parent_dir = os.path.dirname(os.path.normpath(opts.get('target')))
+    timstamp = datetime.datetime.utcnow().strftime('%Y%m%d%H%M%S%d')
+    new_deploy_dir = os.path.join(opts.get('target'), timestamp)
+    current_deploy = os.path.join(opts.get('target'), 'current')
 
     if config('key-required'):
         if config('deploy-key') is None:
@@ -41,11 +45,15 @@ def git_deploy_avail():
     else:
         if not os.path.exists(parent_dir):
             os.makedirs(parent_dir, mode=0o777, exist_ok=True)
-    clone()
+    clone(deploy_dir=new_deploy_dir)
 
     # Update to commit if config('commit')
     if config('commit-or-branch') is not None:
-        update_to_commit(config('commit-or-branch'))
+        update_to_commit(config('commit-or-branch'), deploy_dir=new_deploy_dir)
+
+    if os.path.exists(current_deploy):
+        rmtree(current_deploy)
+    os.symlink(new_deploy_dir, current_deploy)
 
     # Set codebase.available state
     set_state('codebase.available')
