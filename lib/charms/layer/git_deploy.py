@@ -11,7 +11,6 @@ from charmhelpers.core.hookenv import (
 from charms.layer import options
 
 
-
 def git():
     return 'GIT_SSH={} git'.format('{}/files/wrap_ssh.sh'.format(charm_dir()))
 
@@ -39,10 +38,17 @@ def update_to_commit(commit, deploy_dir):
     """
 
     opts = options('git-deploy')
-    cmd = "cd {} && {} checkout {}".format(deploy_dir, git(), commit)
-    res = check_call(cmd, shell=True)
+
+    git_checkout = "cd {} && {} checkout {}".format(deploy_dir, git(), commit)
+    res = check_call(git_checkout, shell=True)
     if res != 0:
-        status_set('error', 'has a problem with git, try `resolved --retry')
+        status_set('error', 'has a problem with git checkout, try `resolved --retry')
         sys.exit(1)
-    chownr(path=opts.get('target'), owner=opts.get('owner'),
-           group=opts.get('group'))
+
+    git_pull = "cd {} && {} pull".format(deploy_dir, git())
+    res = check_call(git_pull, shell=True)
+    if res != 0:
+        status_set('error', 'has a problem with git checkout, try `resolved --retry')
+        sys.exit(1)
+
+    chownr(path=target_dir, owner=opts.get('owner'), group=opts.get('group'))
