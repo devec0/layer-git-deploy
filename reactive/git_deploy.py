@@ -1,5 +1,6 @@
 import os
 import sys
+from shutil import rmtree
 from datetime import datetime
 
 from charms.reactive import when_not, set_state
@@ -18,7 +19,6 @@ def git_deploy_avail():
 
     opts = options('git-deploy')
     target_dir = opts.get('target')
-    parent_dir = os.path.dirname(os.path.normpath(target_dir))
     timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S%d')
     new_deploy_dir = os.path.join(target_dir, timestamp)
     current_deploy = os.path.join(target_dir, 'current')
