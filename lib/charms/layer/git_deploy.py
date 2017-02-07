@@ -51,4 +51,4 @@ def update_to_commit(commit, deploy_dir):
         status_set('error', 'has a problem with git checkout, try `resolved --retry')
         sys.exit(1)
 
-    chownr(path=target_dir, owner=opts.get('owner'), group=opts.get('group'))
+    chownr(path=deploy_dir, owner=opts.get('owner'), group=opts.get('group'))
