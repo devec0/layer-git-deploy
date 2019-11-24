@@ -6,5 +6,6 @@ description: |
 tags:
   - git
   - deploy
-
-
+series:
+  - xenial
+  - bionic

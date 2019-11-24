@@ -1,3 +1,7 @@
 bdist
 .*.swp
 .tox/
+report/
+__pycache__
+*.pyc
+*.db
